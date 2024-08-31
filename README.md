@@ -1,38 +1,50 @@
-# FundMe
+# FundMe Smart Contract
 
-**FundMe** is a smart contract project designed to demonstrate a decentralized funding mechanism on the Ethereum blockchain. The contract allows users to contribute Ether to a fund and includes features to check contributions and withdraw funds. This project utilizes Chainlink's price feeds for ETH/USD conversion and includes various testing scripts for validation.
+**FundMe** is a smart contract built on the Ethereum blockchain that allows users to contribute Ether (ETH) towards a funding goal. The contract ensures contributions meet a minimum USD value using Chainlink's price feeds. It also supports efficient withdrawals by the contract owner with optimized gas usage.
 
 ## Table of Contents
 
-1. [Project Overview](#project-overview)
+1. [Overview](#overview)
 2. [Features](#features)
-3. [Installation](#installation)
+3. [Project Structure](#project-structure)
 4. [Usage](#usage)
 5. [Testing](#testing)
-6. [Scripts](#scripts)
+6. [Deployment](#deployment)
 7. [Contributing](#contributing)
 8. [License](#license)
 
-## Project Overview
+## Overview
 
-The FundMe contract enables users to:
-- Contribute ETH to a fund.
-- Check their contribution.
-- Withdraw funds by the contract owner.
+The **FundMe** contract is designed for decentralized fundraising by allowing users to contribute ETH. The contract owner can withdraw the funds, and contributions are validated against a minimum USD amount using Chainlink's price feed oracles. The project is built to be secure, efficient, and easy to integrate into decentralized applications.
 
-The project includes testing scripts using Foundry and interactions scripts for deployment and withdrawals.
+### Key Components
+
+- **FundMe.sol**: Manages contributions, withdrawals, and owner-only functions.
+- **PriceConverter.sol**: Converts ETH amounts to USD using Chainlink's price feed.
+- **HelperConfig.sol**: Manages network-specific configurations for price feeds.
+- **MockV3Aggregator.sol**: Simulates price feeds for local testing.
 
 ## Features
 
-- **Fund Contract**: Allows users to contribute ETH.
-- **Price Conversion**: Uses Chainlink's price feed to convert ETH to USD.
-- **Withdrawals**: Allows only the contract owner to withdraw funds.
-- **Testing**: Includes unit and integration tests to ensure functionality.
+- **Decentralized Fundraising**: Multiple users can contribute ETH to the contract.
+- **Minimum Contribution**: Validates that each contribution meets a minimum USD value using Chainlink.
+- **Owner-Only Withdrawals**: Only the contract owner can withdraw the funds collected.
+- **Gas-Optimized Withdrawals**: Includes a `cheaperWithdraw` function to minimize gas costs.
+- **Fallback and Receive Functions**: Ensures the contract can handle direct ETH transfers.
 
-## Installation
+## Project Structure
 
-1. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/shgpaknni/Fund-Me.git
-   cd Fund-Me
+```plaintext
+├── src
+│   ├── FundMe.sol                 # Main contract for funding and withdrawals
+│   ├── PriceConverter.sol         # Library for ETH to USD conversion
+├── script
+│   ├── DeployFundMe.s.sol         # Script for deploying the FundMe contract
+│   ├── Interactions.s.sol         # Script for interacting with the contract (funding, withdrawing)
+│   ├── HelperConfig.s.sol         # Configuration script for different networks
+├── test
+│   ├── FundMeTest.sol             # Unit tests for the FundMe contract
+│   ├── FundMeTestintegration.sol  # Integration tests for FundMe
+│   ├── mocks
+│       └── MockV3Aggregator.sol   # Mock price feed contract for testing
+└── .env                           # Environment variables (e.g., RPC URL, private key, API key)
